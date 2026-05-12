@@ -7,6 +7,7 @@ import { CustomCursor } from '@/components/custom-cursor'
 import { Navbar } from '@/components/navbar'
 import { PageTransition } from '@/components/page-transition'
 import { ScrollProgress } from '@/components/scroll-progress'
+import { LanguageProvider } from '@/providers/language-provider'
 
 export const metadata: Metadata = {
   title: 'Seydina Mouhammad Diop — UI/UX Designer & FullStack Developer',
@@ -43,14 +44,17 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${GeistSans.variable} ${GeistMono.variable} bg-background`}>
       <body className="font-sans antialiased overflow-x-hidden bg-background text-foreground">
-        <SmoothScrollProvider>
-          <CustomCursor />
-          <ScrollProgress />
-          <Navbar />
-          <PageTransition>
-            {children}
-          </PageTransition>
-        </SmoothScrollProvider>
+        <LanguageProvider>
+          <SmoothScrollProvider>
+            <CustomCursor />
+            <ScrollProgress />
+            <Navbar />
+            <PageTransition>
+              {children}
+            </PageTransition>
+          </SmoothScrollProvider>
+        </LanguageProvider>
+
       </body>
     </html>
   )

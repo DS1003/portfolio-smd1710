@@ -4,29 +4,7 @@ import { useRef } from 'react'
 import { motion, useInView } from 'framer-motion'
 import { ArrowUpRight, MapPin } from 'lucide-react'
 import Link from 'next/link'
-
-const stats = [
-  {
-    value: '5+',
-    label: 'years',
-    description: 'Experience designing and engineering products across SaaS, EdTech, and enterprise.',
-  },
-  {
-    value: '30+',
-    label: 'projects',
-    description: 'Successfully shipped — from focused MVPs to complete digital ecosystems and design systems.',
-  },
-  {
-    value: '15+',
-    label: 'clients',
-    description: 'Trusted by startups, agencies and enterprises across Senegal, France, and beyond.',
-  },
-  {
-    value: '99%',
-    label: 'craft index',
-    description: 'Pixel-perfect, performant, and accessible — based on client and team feedback over the years.',
-  },
-]
+import { useLanguage } from '@/providers/language-provider'
 
 function AnimatedValue({ value, delay }: { value: string; delay: number }) {
   const ref = useRef(null)
@@ -45,6 +23,31 @@ function AnimatedValue({ value, delay }: { value: string; delay: number }) {
 }
 
 export function AboutSection() {
+  const { t } = useLanguage()
+
+  const stats = [
+    {
+      value: '04+',
+      label: t.about.stats[0].label,
+      description: t.about.description1,
+    },
+    {
+      value: '20+',
+      label: t.about.stats[1].label,
+      description: t.about.description2,
+    },
+    {
+      value: '15+',
+      label: t.about.stats[2].label,
+      description: t.contact.description,
+    },
+    {
+      value: '99%',
+      label: 'Craft',
+      description: t.hero.description,
+    },
+  ]
+
   return (
     <section id="about" className="relative py-24 sm:py-32 lg:py-40 px-4 sm:px-6 lg:px-8">
       <div className="relative max-w-7xl mx-auto">
@@ -57,9 +60,8 @@ export function AboutSection() {
           className="inline-flex items-center gap-2 pl-2 pr-4 py-1.5 rounded-full glass mb-6"
         >
           <span className="px-2 py-0.5 rounded-full bg-accent text-accent-foreground text-xs font-semibold">
-            About
+            {t.about.badge}
           </span>
-          <span className="text-xs text-muted-foreground">Get to know me</span>
         </motion.div>
 
         {/* Bento grid */}
@@ -88,12 +90,7 @@ export function AboutSection() {
               </h3>
 
               <p className="mt-6 text-base sm:text-lg text-muted-foreground leading-relaxed text-pretty">
-                A FullStack Developer and Product Designer crafting digital experiences that feel{' '}
-                <span className="text-foreground">intuitive</span>,{' '}
-                <span className="text-foreground">beautiful</span>, and{' '}
-                <span className="text-foreground">human</span>. With a background spanning DesignOps,
-                frontend architecture, and SaaS engineering — I bring a thoughtful balance of
-                creativity and engineering rigor to every project.
+                {t.about.description1} {t.about.description2}
               </p>
 
               <div className="mt-8 flex items-center gap-2 text-sm text-muted-foreground">
@@ -103,10 +100,10 @@ export function AboutSection() {
             </div>
 
             <Link
-              href="#contact"
+              href="/contact"
               className="relative group inline-flex items-center justify-center gap-2 w-full mt-10 py-4 rounded-2xl bg-foreground text-background font-medium text-sm hover:bg-accent transition-all duration-300"
             >
-              <span>About me</span>
+              <span>{t.nav.contact}</span>
               <ArrowUpRight className="w-4 h-4 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 transition-transform" />
             </Link>
           </motion.div>
@@ -114,7 +111,7 @@ export function AboutSection() {
           {/* 4 stat cards in 2x2 grid (right) */}
           {stats.map((stat, i) => (
             <motion.div
-              key={stat.label}
+              key={i}
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}

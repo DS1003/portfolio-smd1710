@@ -2,31 +2,7 @@
 
 import { motion } from 'framer-motion'
 import { Code2, Palette, Wrench, Sparkles } from 'lucide-react'
-
-const skillGroups = [
-  {
-    icon: Code2,
-    label: 'Frontend & Web',
-    skills: ['Next.js', 'React', 'TypeScript', 'TailwindCSS', 'Framer Motion', 'Vue / Nuxt', 'GSAP'],
-  },
-  {
-    icon: Wrench,
-    label: 'Backend & Data',
-    skills: ['Node.js', 'NestJS', 'Express', 'Prisma', 'PostgreSQL', 'Supabase', 'REST / GraphQL'],
-  },
-  {
-    icon: Palette,
-    label: 'Design & DesignOps',
-    skills: ['Figma', 'Framer', 'Design Systems', 'Prototyping', 'UX Research', 'Motion Design', 'Accessibility'],
-  },
-  {
-    icon: Sparkles,
-    label: 'Tooling & Workflow',
-    skills: ['Git', 'Docker', 'Vercel', 'GitHub Actions', 'Linear', 'Notion', 'Storybook'],
-  },
-]
-
-const allSkills = skillGroups.flatMap((g) => g.skills)
+import { useLanguage } from '@/providers/language-provider'
 
 function Marquee({ items, direction = 'left' }: { items: string[]; direction?: 'left' | 'right' }) {
   const duplicated = [...items, ...items]
@@ -51,6 +27,33 @@ function Marquee({ items, direction = 'left' }: { items: string[]; direction?: '
 }
 
 export function SkillsSection() {
+  const { t, language } = useLanguage()
+
+  const skillGroups = [
+    {
+      icon: Code2,
+      label: t.skills.categories.frontend,
+      skills: ['Next.js', 'React', 'TypeScript', 'TailwindCSS', 'Framer Motion', 'Vue / Nuxt', 'GSAP'],
+    },
+    {
+      icon: Wrench,
+      label: t.skills.categories.backend,
+      skills: ['Node.js', 'NestJS', 'Express', 'Prisma', 'PostgreSQL', 'Supabase', 'REST / GraphQL'],
+    },
+    {
+      icon: Palette,
+      label: t.skills.categories.design,
+      skills: ['Figma', 'Framer', 'Design Systems', 'Prototyping', 'UX Research', 'Motion Design', 'Accessibility'],
+    },
+    {
+      icon: Sparkles,
+      label: t.skills.categories.tools,
+      skills: ['Git', 'Docker', 'Vercel', 'GitHub Actions', 'Linear', 'Notion', 'Storybook'],
+    },
+  ]
+
+  const allSkills = skillGroups.flatMap((g) => g.skills)
+
   return (
     <section id="skills" className="relative py-24 sm:py-32 lg:py-40 px-4 sm:px-6 lg:px-8">
       <div className="relative max-w-7xl mx-auto">
@@ -65,9 +68,9 @@ export function SkillsSection() {
               className="inline-flex items-center gap-2 pl-2 pr-4 py-1.5 rounded-full glass mb-6"
             >
               <span className="px-2 py-0.5 rounded-full bg-accent text-accent-foreground text-xs font-semibold">
-                Skills
+                {t.skills.badge}
               </span>
-              <span className="text-xs text-muted-foreground">Tools of the trade</span>
+              <span className="text-xs text-muted-foreground">{language === 'fr' ? 'Mes outils préférés' : 'Tools of the trade'}</span>
             </motion.div>
 
             <motion.h2
@@ -77,8 +80,8 @@ export function SkillsSection() {
               transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
               className="text-4xl sm:text-5xl lg:text-7xl font-medium tracking-[-0.03em] leading-[1.05] text-balance max-w-3xl"
             >
-              <span className="text-gradient-mute">Technologies I work with</span>{' '}
-              <span className="text-foreground">— from idea to ship</span>
+              <span className="text-gradient-mute">{language === 'fr' ? 'Technologies utilisées' : 'Technologies I work with'}</span>{' '}
+              <span className="text-foreground">{language === 'fr' ? '— de l\'idée à l\'envoi' : '— from idea to ship'}</span>
             </motion.h2>
           </div>
         </div>

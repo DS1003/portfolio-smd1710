@@ -3,6 +3,7 @@
 import { useRef } from 'react'
 import { motion, useScroll, useTransform, useInView } from 'framer-motion'
 import { MapPin, ArrowUpRight } from 'lucide-react'
+import { useLanguage } from '@/providers/language-provider'
 
 interface Experience {
   id: string
@@ -13,58 +14,6 @@ interface Experience {
   description: string
   current?: boolean
 }
-
-const experiences: Experience[] = [
-  {
-    id: 'sparline',
-    company: 'Sparline',
-    role: 'Lead UI/UX Designer & Frontend Developer',
-    period: '2024 — Present',
-    location: 'Dakar, Senegal',
-    description: 'Leading product design and frontend development for enterprise solutions, building scalable design systems and modern web applications.',
-    current: true,
-  },
-  {
-    id: 'yoni-africa',
-    company: 'Yoni Africa',
-    role: 'Lead UI/UX Designer & DesignOps',
-    period: '2023 — 2024',
-    location: 'Dakar, Senegal',
-    description: 'Designed the full digital ecosystem — mobile apps, web platforms, and end-to-end design system — for a logistics & delivery startup.',
-  },
-  {
-    id: 'sonatel-academy',
-    company: 'Sonatel Academy',
-    role: 'Lead UI/UX & FullStack Developer',
-    period: '2023 — 2024',
-    location: 'Dakar, Senegal',
-    description: 'Built an end-to-end educational management platform handling the full learner lifecycle from recruitment to professional placement.',
-  },
-  {
-    id: 'dmt',
-    company: 'DMT',
-    role: 'Lead UI/UX & Frontend Developer',
-    period: '2022 — 2023',
-    location: 'Dakar, Senegal',
-    description: 'Redesigned enterprise platforms and QHSE management solutions with focus on user experience and modern interfaces.',
-  },
-  {
-    id: 'rh-perspectives',
-    company: 'RH Perspectives',
-    role: 'UI/UX Designer',
-    period: '2021 — 2022',
-    location: 'Dakar, Senegal',
-    description: 'Designed HR management tools and recruitment platforms with emphasis on accessibility and user-centered design.',
-  },
-  {
-    id: 'moomel',
-    company: 'Moomel',
-    role: 'UI/UX Designer & Developer',
-    period: '2020 — 2021',
-    location: 'Dakar, Senegal',
-    description: 'Created digital products and web experiences for various clients — from startups to established businesses.',
-  },
-]
 
 function ExperienceCard({ experience, index }: { experience: Experience; index: number }) {
   const ref = useRef(null)
@@ -124,6 +73,7 @@ function ExperienceCard({ experience, index }: { experience: Experience; index: 
 }
 
 export function ExperienceSection() {
+  const { t, language } = useLanguage()
   const containerRef = useRef<HTMLDivElement>(null)
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -131,6 +81,34 @@ export function ExperienceSection() {
   })
 
   const lineY = useTransform(scrollYProgress, [0, 1], ['0%', '100%'])
+
+  const experiences: Experience[] = [
+    {
+      id: 'sparline',
+      company: 'Sparline',
+      role: language === 'fr' ? 'Lead UI/UX Designer & Développeur Frontend' : 'Lead UI/UX Designer & Frontend Developer',
+      period: '2024 — Present',
+      location: 'Dakar, Senegal',
+      description: language === 'fr' ? 'Direction du design produit et du développement frontend pour des solutions d\'entreprise.' : 'Leading product design and frontend development for enterprise solutions.',
+      current: true,
+    },
+    {
+      id: 'yoni-africa',
+      company: 'Yoni Africa',
+      role: language === 'fr' ? 'Lead UI/UX Designer & DesignOps' : 'Lead UI/UX Designer & DesignOps',
+      period: '2023 — 2024',
+      location: 'Dakar, Senegal',
+      description: language === 'fr' ? 'Conception de l\'écosystème numérique complet — applications mobiles et plateformes web.' : 'Designed the full digital ecosystem — mobile apps, web platforms, and design system.',
+    },
+    {
+      id: 'sonatel-academy',
+      company: 'Sonatel Academy',
+      role: language === 'fr' ? 'Lead UI/UX & Développeur FullStack' : 'Lead UI/UX & FullStack Developer',
+      period: '2023 — 2024',
+      location: 'Dakar, Senegal',
+      description: language === 'fr' ? 'Construction d\'une plateforme de gestion éducative gérant tout le cycle de vie de l\'apprenant.' : 'Built an end-to-end educational management platform handling the full learner lifecycle.',
+    },
+  ]
 
   return (
     <section id="experience" ref={containerRef} className="relative py-24 sm:py-32 lg:py-40 px-4 sm:px-6 lg:px-8">
@@ -148,9 +126,9 @@ export function ExperienceSection() {
               className="inline-flex items-center gap-2 pl-2 pr-4 py-1.5 rounded-full glass mb-6"
             >
               <span className="px-2 py-0.5 rounded-full bg-accent text-accent-foreground text-xs font-semibold">
-                Experience
+                {t.experience.badge}
               </span>
-              <span className="text-xs text-muted-foreground">6 roles since 2020</span>
+              <span className="text-xs text-muted-foreground">{experiences.length} roles since 2020</span>
             </motion.div>
 
             <motion.h2
@@ -160,8 +138,8 @@ export function ExperienceSection() {
               transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
               className="text-4xl sm:text-5xl lg:text-7xl font-medium tracking-[-0.03em] leading-[1.05] text-balance max-w-3xl"
             >
-              <span className="text-gradient-mute">A journey of</span>{' '}
-              <span className="text-foreground">growth and craft</span>
+              <span className="text-gradient-mute">{language === 'fr' ? 'Un parcours de' : 'A journey of'}</span>{' '}
+              <span className="text-foreground">{language === 'fr' ? 'croissance et d\'artisanat' : 'growth and craft'}</span>
             </motion.h2>
           </div>
         </div>

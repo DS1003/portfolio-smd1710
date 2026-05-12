@@ -3,23 +3,26 @@
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { Linkedin, Github, Mail } from 'lucide-react'
+import { useLanguage } from '@/providers/language-provider'
 
 const currentYear = new Date().getFullYear()
 
-const footerLinks = [
-  { label: 'Work', href: '#work' },
-  { label: 'About', href: '#about' },
-  { label: 'Experience', href: '#experience' },
-  { label: 'Contact', href: '#contact' },
-]
-
-const socialLinks = [
-  { label: 'LinkedIn', href: 'https://linkedin.com/in/seydina-diop', icon: Linkedin },
-  { label: 'GitHub', href: 'https://github.com/seydina-diop', icon: Github },
-  { label: 'Email', href: 'mailto:seydina@example.com', icon: Mail },
-]
-
 export function Footer() {
+  const { t } = useLanguage()
+
+  const footerLinks = [
+    { label: t.nav.work, href: '/#work' },
+    { label: t.nav.about, href: '/#about' },
+    { label: t.nav.experience, href: '/#experience' },
+    { label: t.nav.contact, href: '/contact' },
+  ]
+
+  const socialLinks = [
+    { label: 'LinkedIn', href: 'https://linkedin.com/in/seydina-diop', icon: Linkedin },
+    { label: 'GitHub', href: 'https://github.com/seydina-diop', icon: Github },
+    { label: 'Email', href: 'mailto:hello@seydinadiop.com', icon: Mail },
+  ]
+
   return (
     <footer className="relative py-12 lg:py-16 border-t border-border/50">
       <div className="container mx-auto px-6 lg:px-12">
@@ -32,7 +35,7 @@ export function Footer() {
               </span>
             </Link>
             <p className="text-sm text-muted-foreground max-w-xs">
-              Building modern digital experiences for startups, SaaS platforms and ambitious brands.
+              {t.footer.brand}
             </p>
           </div>
 
@@ -58,7 +61,7 @@ export function Footer() {
           {/* Social */}
           <div>
             <h4 className="font-display text-sm font-semibold text-foreground mb-4 tracking-wide uppercase">
-              Connect
+              {t.contact.subtitle}
             </h4>
             <div className="flex items-center gap-3">
               {socialLinks.map((link) => (
@@ -82,10 +85,10 @@ export function Footer() {
         {/* Bottom Bar */}
         <div className="pt-8 border-t border-border/30 flex flex-col md:flex-row items-center justify-between gap-4">
           <p className="text-sm text-muted-foreground">
-            © {currentYear} Seydina Mouhammad Diop. All rights reserved.
+            © {currentYear} Seydina Mouhammad Diop. {t.footer.rights}
           </p>
           <p className="text-sm text-muted-foreground">
-            Designed & Built with{' '}
+            {t.footer.builtWith}{' '}
             <span className="text-accent">♥</span>
           </p>
         </div>

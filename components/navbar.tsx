@@ -4,24 +4,28 @@ import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { X, ArrowUpRight, Plus } from 'lucide-react'
 import Link from 'next/link'
-
-const navLinks = [
-  { label: 'Work', href: '#work' },
-  { label: 'About', href: '#about' },
-  { label: 'Experience', href: '#experience' },
-  { label: 'Skills', href: '#skills' },
-  { label: 'Contact', href: '#contact' },
-]
-
-const socials = [
-  { label: 'GitHub', href: 'https://github.com' },
-  { label: 'LinkedIn', href: 'https://linkedin.com' },
-  { label: 'Email', href: 'mailto:hello@seydinadiop.com' },
-]
+import { useLanguage } from '@/providers/language-provider'
+import { LanguageSwitcher } from './language-switcher'
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
+  const { t } = useLanguage()
+
+  const navLinks = [
+    { label: t.nav.work, href: '/#work' },
+    { label: t.nav.about, href: '/#about' },
+    { label: t.nav.experience, href: '/#experience' },
+    { label: t.nav.skills, href: '/#skills' },
+    { label: t.nav.contact, href: '/contact' },
+  ]
+
+  const socials = [
+    { label: 'GitHub', href: 'https://github.com/seydina-diop' },
+    { label: 'LinkedIn', href: 'https://linkedin.com/in/seydina-diop' },
+    { label: 'WhatsApp', href: 'https://wa.me/221785993546' },
+    { label: 'Email', href: 'mailto:hello@seydinadiop.com' },
+  ]
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20)
@@ -48,7 +52,7 @@ export function Navbar() {
       >
         <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">
           {/* Logo / Brand pill */}
-          <Link href="#" className="group">
+          <Link href="/" className="group">
             <div className={`flex items-center gap-3 pl-1.5 pr-4 py-1.5 rounded-full transition-all duration-300 ${
               scrolled ? 'glass-strong' : 'glass'
             }`}>
@@ -79,23 +83,27 @@ export function Navbar() {
 
           {/* Right actions */}
           <div className="flex items-center gap-2">
+            <div className="hidden sm:block">
+              <LanguageSwitcher />
+            </div>
+
             <Link
-              href="#contact"
+              href="/contact"
               className="hidden sm:flex items-center gap-2 pl-4 pr-4 py-2 rounded-full surface-elevated text-sm font-medium hover:border-white/20 transition-all duration-300"
             >
               <span className="relative flex w-2 h-2">
                 <span className="absolute inset-0 rounded-full bg-accent animate-pulse-dot" />
                 <span className="absolute inset-0 rounded-full bg-accent blur-sm opacity-60" />
               </span>
-              <span>Available</span>
+              <span>{t.nav.available}</span>
             </Link>
 
             <button
               onClick={() => setMenuOpen(true)}
               className="group flex items-center gap-2 pl-4 pr-1.5 py-1.5 rounded-full bg-foreground text-background hover:bg-accent transition-all duration-300"
-              aria-label="Open menu"
+              aria-label={t.nav.menu}
             >
-              <span className="text-sm font-medium">Menu</span>
+              <span className="text-sm font-medium">{t.nav.menu}</span>
               <span className="w-8 h-8 rounded-full bg-background/10 flex items-center justify-center">
                 <Plus className="w-4 h-4 transition-transform duration-300 group-hover:rotate-90" />
               </span>
@@ -126,16 +134,19 @@ export function Navbar() {
                   <span className="text-sm font-medium tracking-tight">Seydina Diop</span>
                 </div>
 
-                <button
-                  onClick={() => setMenuOpen(false)}
-                  className="group flex items-center gap-2 pl-4 pr-1.5 py-1.5 rounded-full bg-foreground text-background hover:bg-accent transition-all duration-300"
-                  aria-label="Close menu"
-                >
-                  <span className="text-sm font-medium">Close</span>
-                  <span className="w-8 h-8 rounded-full bg-background/10 flex items-center justify-center">
-                    <X className="w-4 h-4" />
-                  </span>
-                </button>
+                <div className="flex items-center gap-4">
+                  <LanguageSwitcher />
+                  <button
+                    onClick={() => setMenuOpen(false)}
+                    className="group flex items-center gap-2 pl-4 pr-1.5 py-1.5 rounded-full bg-foreground text-background hover:bg-accent transition-all duration-300"
+                    aria-label={t.nav.close}
+                  >
+                    <span className="text-sm font-medium">{t.nav.close}</span>
+                    <span className="w-8 h-8 rounded-full bg-background/10 flex items-center justify-center">
+                      <X className="w-4 h-4" />
+                    </span>
+                  </button>
+                </div>
               </div>
 
               {/* Content */}

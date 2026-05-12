@@ -5,7 +5,10 @@ import { useRef } from 'react'
 import { ArrowUpRight, Phone, Mail } from 'lucide-react'
 import Link from 'next/link'
 
+import { useLanguage } from '@/providers/language-provider'
+
 export function HeroSection() {
+  const { t } = useLanguage()
   const ref = useRef<HTMLDivElement>(null)
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -38,10 +41,10 @@ export function HeroSection() {
           <div className="flex items-center gap-2 pl-2 pr-4 py-2 rounded-full glass">
             <span className="inline-flex items-center gap-1.5 pl-2 pr-3 py-1 rounded-full bg-accent text-accent-foreground text-xs font-semibold">
               <span className="w-1.5 h-1.5 rounded-full bg-accent-foreground animate-pulse-dot" />
-              2 SLOTS
+              2 {t.hero.slots}
             </span>
             <span className="text-sm text-muted-foreground">
-              available in <span className="text-foreground font-medium">June 2026</span>
+              {t.hero.availability} <span className="text-foreground font-medium">June 2026</span>
             </span>
           </div>
         </motion.div>
@@ -53,11 +56,11 @@ export function HeroSection() {
           transition={{ duration: 1, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
           className="mt-8 sm:mt-10 text-5xl sm:text-6xl md:text-7xl lg:text-[7.5rem] xl:text-[8.5rem] font-medium tracking-[-0.04em] leading-[0.95] text-balance"
         >
-          <span className="text-gradient-mute">FullStack Developer</span>
+          <span className="text-gradient-mute">{t.hero.role}</span>
           <br />
-          <span className="text-foreground">crafting modern</span>
+          <span className="text-foreground">{t.hero.line1}</span>
           <br />
-          <span className="text-foreground">digital products</span>
+          <span className="text-foreground">{t.hero.line2}</span>
         </motion.h1>
 
         {/* Subtitle */}
@@ -67,8 +70,7 @@ export function HeroSection() {
           transition={{ duration: 0.8, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
           className="mt-8 sm:mt-10 max-w-xl text-base sm:text-lg text-muted-foreground leading-relaxed text-pretty"
         >
-          Beautifully designed, performant interfaces for startups, SaaS
-          platforms and ambitious brands. Based in Dakar — working worldwide.
+          {t.hero.description}
         </motion.p>
 
         {/* CTA buttons */}
@@ -79,11 +81,10 @@ export function HeroSection() {
           className="mt-10 flex flex-col sm:flex-row items-center gap-3"
         >
           <Link
-            href="#contact"
+            href="/contact"
             className="group inline-flex items-center gap-2.5 pl-5 pr-2 py-2 rounded-full bg-foreground text-background font-medium text-sm hover:bg-accent transition-all duration-300"
           >
-            <Phone className="w-4 h-4" />
-            <span>Let&apos;s Talk</span>
+            <span>{t.hero.ctaTalk}</span>
             <span className="w-8 h-8 rounded-full bg-background/10 flex items-center justify-center group-hover:rotate-45 transition-transform duration-300">
               <ArrowUpRight className="w-4 h-4" />
             </span>
@@ -93,9 +94,10 @@ export function HeroSection() {
             className="group inline-flex items-center gap-2.5 px-5 py-3 rounded-full surface-elevated font-medium text-sm hover:border-white/20 transition-all duration-300"
           >
             <Mail className="w-4 h-4" />
-            <span>Email Me</span>
+            <span>{t.hero.ctaEmail}</span>
           </Link>
         </motion.div>
+
 
         {/* Floating preview cards */}
         <motion.div

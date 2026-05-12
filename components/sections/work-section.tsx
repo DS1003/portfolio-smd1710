@@ -6,85 +6,15 @@ import Image from 'next/image'
 import { ArrowUpRight } from 'lucide-react'
 import Link from 'next/link'
 
-interface Project {
-  id: string
-  title: string
-  role: string
-  client: string
-  category: string
-  description: string
-  date: string
-  technologies: string[]
-  image: string
-  icon: string
-}
+import { projects, type Project } from '@/lib/data'
 
-const projects: Project[] = [
-  {
-    id: 'yoni-africa',
-    title: 'Yoni Africa',
-    role: 'Lead UI/UX Designer & DesignOps',
-    client: 'Yoni Africa SAS',
-    category: 'Product Ecosystem',
-    description: 'Designed the complete digital ecosystem — web backoffice, client mobile app, delivery app, business app, landing page, and an end-to-end design system unifying every touchpoint.',
-    date: 'Mar 2024',
-    technologies: ['Figma', 'DesignOps', 'Design System', 'React Native'],
-    image: '/projects/yoni-africa.jpg',
-    icon: 'Y',
-  },
-  {
-    id: 'sonatel-academy',
-    title: 'Sonatel Academy',
-    role: 'Lead UI/UX & FullStack',
-    client: 'Sonatel Group',
-    category: 'EdTech Platform',
-    description: 'End-to-end educational management platform driving sourcing, online assessments, learner management, and professional placement at national scale.',
-    date: 'Aug 2024',
-    technologies: ['Next.js', 'NestJS', 'Prisma', 'PostgreSQL'],
-    image: '/projects/sonatel-academy.jpg',
-    icon: 'S',
-  },
-  {
-    id: 'dmt-qhse',
-    title: 'DMT QHSE Platform',
-    role: 'Lead UI/UX & Frontend Developer',
-    client: 'Dakar Mobility & Transit',
-    category: 'Enterprise Solution',
-    description: 'Redesigned and rebuilt internal enterprise platforms — including a full QHSE management suite — with modern interfaces and streamlined workflows.',
-    date: 'Nov 2023',
-    technologies: ['NuxtJS', 'Figma', 'Design System'],
-    image: '/projects/dmt-qhse.jpg',
-    icon: 'D',
-  },
-  {
-    id: 'neosync',
-    title: 'NeoSync',
-    role: 'FullStack Developer',
-    client: 'NeoSync SaaS',
-    category: 'SaaS Platform',
-    description: 'A WooCommerce synchronization platform enabling seamless data flow, automation, and inventory orchestration across multiple stores.',
-    date: 'Jul 2023',
-    technologies: ['Next.js', 'ExpressJS', 'Prisma', 'PostgreSQL'],
-    image: '/projects/neosync.jpg',
-    icon: 'N',
-  },
-  {
-    id: 'ecole-221',
-    title: 'École 221',
-    role: 'Lead UI/UX Designer',
-    client: 'École 221',
-    category: 'EdTech Design',
-    description: 'School management 360 platform — a comprehensive UX system covering enrollment, academics, administration and parent communication.',
-    date: 'Feb 2023',
-    technologies: ['Figma', 'UX Research', 'Prototyping'],
-    image: '/projects/ecole-221.jpg',
-    icon: 'É',
-  },
-]
+
+import { useLanguage } from '@/providers/language-provider'
 
 function ProjectCard({ project, index }: { project: Project; index: number }) {
   const ref = useRef<HTMLDivElement>(null)
   const isInView = useInView(ref, { once: true, margin: '-80px' })
+  const { language, t } = useLanguage()
 
   return (
     <motion.article
@@ -107,32 +37,32 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
             {project.title}
           </h3>
           <p className="mt-4 text-sm sm:text-base text-muted-foreground leading-relaxed text-pretty max-w-md">
-            {project.description}
+            {project.description[language]}
           </p>
         </div>
 
         {/* Meta */}
         <div className="mt-8 space-y-3 text-sm">
           <div className="flex items-center justify-between py-3 border-t border-border/60">
-            <span className="text-muted-foreground">Category</span>
-            <span className="font-medium">{project.category}</span>
+            <span className="text-muted-foreground">{t.work.category}</span>
+            <span className="font-medium">{project.category[language]}</span>
           </div>
           <div className="flex items-center justify-between py-3 border-t border-border/60">
-            <span className="text-muted-foreground">Client</span>
+            <span className="text-muted-foreground">{t.work.client}</span>
             <span className="font-medium">{project.client}</span>
           </div>
           <div className="flex items-center justify-between py-3 border-t border-border/60">
-            <span className="text-muted-foreground">Date</span>
+            <span className="text-muted-foreground">{t.work.date}</span>
             <span className="font-medium">{project.date}</span>
           </div>
         </div>
 
         {/* CTA */}
         <Link
-          href="#contact"
+          href={`/projects/${project.id}`}
           className="mt-6 group/btn inline-flex items-center justify-center gap-2 w-full py-3.5 rounded-full bg-foreground text-background font-medium text-sm hover:bg-accent transition-all duration-300"
         >
-          <span>View Details</span>
+          <span>{t.work.viewDetails}</span>
           <ArrowUpRight className="w-4 h-4 group-hover/btn:-translate-y-0.5 group-hover/btn:translate-x-0.5 transition-transform" />
         </Link>
       </div>
@@ -156,7 +86,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
             0{index + 1} / 0{projects.length}
           </span>
           <span className="text-xs font-medium text-foreground/70 bg-background/30 backdrop-blur-md px-2.5 py-1 rounded-full border border-white/10">
-            {project.role}
+            {project.role[language]}
           </span>
         </div>
 
@@ -179,6 +109,8 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
 }
 
 export function WorkSection() {
+  const { t } = useLanguage()
+
   return (
     <section id="work" className="relative py-24 sm:py-32 lg:py-40 px-4 sm:px-6 lg:px-8">
       <div className="absolute inset-0 grid-pattern grid-pattern-fade opacity-30 pointer-events-none" />
@@ -195,7 +127,7 @@ export function WorkSection() {
               className="inline-flex items-center gap-2 pl-2 pr-4 py-1.5 rounded-full glass mb-6"
             >
               <span className="px-2 py-0.5 rounded-full bg-accent text-accent-foreground text-xs font-semibold">
-                Projects
+                {t.work.badge}
               </span>
               <span className="text-xs text-muted-foreground">2023 – 2026</span>
             </motion.div>
@@ -207,8 +139,8 @@ export function WorkSection() {
               transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
               className="text-4xl sm:text-5xl lg:text-7xl font-medium tracking-[-0.03em] leading-[1.05] text-balance max-w-3xl"
             >
-              <span className="text-gradient-mute">A curated selection of</span>{' '}
-              <span className="text-foreground">products built with care</span>
+              <span className="text-gradient-mute">{t.work.title}</span>{' '}
+              <span className="text-foreground">{t.work.subtitle}</span>
             </motion.h2>
           </div>
 
@@ -219,10 +151,10 @@ export function WorkSection() {
             transition={{ duration: 0.6, delay: 0.2 }}
           >
             <Link
-              href="#contact"
+              href="/projects"
               className="group inline-flex items-center gap-2.5 pl-5 pr-2 py-2 rounded-full surface-elevated text-sm font-medium hover:border-white/20 transition-all duration-300"
             >
-              <span>All Projects</span>
+              <span>{t.work.allProjects}</span>
               <span className="w-8 h-8 rounded-full bg-accent flex items-center justify-center text-accent-foreground group-hover:rotate-45 transition-transform duration-300">
                 <ArrowUpRight className="w-4 h-4" />
               </span>
@@ -240,3 +172,4 @@ export function WorkSection() {
     </section>
   )
 }
+
