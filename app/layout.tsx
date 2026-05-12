@@ -8,6 +8,7 @@ import { Navbar } from '@/components/navbar'
 import { PageTransition } from '@/components/page-transition'
 import { ScrollProgress } from '@/components/scroll-progress'
 import { LanguageProvider } from '@/providers/language-provider'
+import { ScrollToTop } from '@/components/scroll-to-top'
 
 export const metadata: Metadata = {
   title: 'Seydina Mouhammad Diop — UI/UX Designer & FullStack Developer',
@@ -49,6 +50,7 @@ export default function RootLayout({
             <CustomCursor />
             <ScrollProgress />
             <Navbar />
+            <ScrollToTop />
             <PageTransition>
               {children}
             </PageTransition>
