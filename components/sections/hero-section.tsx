@@ -2,10 +2,12 @@
 
 import { motion, useScroll, useTransform } from 'framer-motion'
 import { useRef } from 'react'
-import { ArrowUpRight, Phone, Mail } from 'lucide-react'
+import { ArrowUpRight } from 'lucide-react'
 import Link from 'next/link'
 
 import { useLanguage } from '@/providers/language-provider'
+import ShinyText from '@/components/shiny-text'
+import SplitText from '@/components/split-text'
 
 export function HeroSection() {
   const { t } = useLanguage()
@@ -15,150 +17,137 @@ export function HeroSection() {
     offset: ['start start', 'end start'],
   })
 
-  const y = useTransform(scrollYProgress, [0, 1], [0, 200])
+  const y = useTransform(scrollYProgress, [0, 1], [0, 150])
   const opacity = useTransform(scrollYProgress, [0, 0.8], [1, 0])
-  const scale = useTransform(scrollYProgress, [0, 1], [1, 0.95])
+  const scale = useTransform(scrollYProgress, [0, 1], [1, 0.98])
 
   return (
-    <section ref={ref} className="relative min-h-screen flex items-center justify-center overflow-hidden pt-32 pb-20 px-4 sm:px-6 lg:px-8">
-      {/* Background grid */}
-      <div className="absolute inset-0 grid-pattern grid-pattern-fade opacity-50 pointer-events-none" />
+    <section ref={ref} className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden pt-32 pb-20 px-4 sm:px-6 lg:px-8">
+      <div className="absolute inset-0 grid-pattern grid-pattern-fade opacity-20 pointer-events-none" />
 
-      {/* Ambient glow */}
-      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[80%] h-[40%] bg-accent/[0.06] blur-[120px] rounded-full pointer-events-none" />
+
 
       <motion.div 
         style={{ y, opacity, scale }} 
-        className="relative max-w-6xl mx-auto w-full flex flex-col items-center text-center"
+        className="relative max-w-5xl mx-auto w-full flex flex-col items-center text-center z-10"
       >
-        {/* Availability pill */}
+        {/* Top Pill Badge with Shiny Effect */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-          className="inline-flex items-center"
+          className="inline-flex items-center gap-2 p-1 rounded-full bg-white/5 border border-white/10 backdrop-blur-md"
         >
-          <div className="flex items-center gap-2 pl-2 pr-4 py-2 rounded-full glass">
-            <span className="inline-flex items-center gap-1.5 pl-2 pr-3 py-1 rounded-full bg-accent text-accent-foreground text-xs font-semibold">
-              <span className="w-1.5 h-1.5 rounded-full bg-accent-foreground animate-pulse-dot" />
-              2 {t.hero.slots}
-            </span>
-            <span className="text-sm text-muted-foreground">
-              {t.hero.availability} <span className="text-foreground font-medium">June 2026</span>
-            </span>
-          </div>
+          <span className="px-3 py-1 rounded-full bg-accent text-accent-foreground text-[10px] font-bold uppercase tracking-wider">
+            2 {t.hero.slots}
+          </span>
+          <ShinyText 
+            text={`${t.hero.availability} June 2026`}
+            disabled={false}
+            speed={3}
+            className="pr-3 text-[10px] font-medium uppercase tracking-widest"
+            color="rgba(255,255,255,0.4)"
+            shineColor="#ffffff"
+          />
         </motion.div>
 
-        {/* Main heading */}
-        <motion.h1
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-          className="mt-8 sm:mt-10 text-5xl sm:text-6xl md:text-7xl lg:text-[7.5rem] xl:text-[8.5rem] font-medium tracking-[-0.04em] leading-[0.95] text-balance"
-        >
-          <span className="text-gradient-mute">{t.hero.role}</span>
-          <br />
-          <span className="text-foreground">{t.hero.line1}</span>
-          <br />
-          <span className="text-foreground">{t.hero.line2}</span>
-        </motion.h1>
+        {/* Main Heading with SplitText Animation */}
+        <div className="mt-10 flex flex-col items-center gap-2">
+          <SplitText
+            text={t.hero.role}
+            className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-medium tracking-tight text-gradient-mute"
+            delay={100}
+          />
+          <SplitText
+            text={`${t.hero.line1} ${t.hero.line2}`}
+            className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-medium tracking-tight text-foreground"
+            delay={500}
+          />
+        </div>
+
 
         {/* Subtitle */}
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
-          className="mt-8 sm:mt-10 max-w-xl text-base sm:text-lg text-muted-foreground leading-relaxed text-pretty"
+          transition={{ duration: 0.8, delay: 1, ease: [0.16, 1, 0.3, 1] }}
+          className="mt-8 max-w-2xl text-base sm:text-lg lg:text-xl text-muted-foreground leading-relaxed"
         >
           {t.hero.description}
         </motion.p>
 
-        {/* CTA buttons */}
+        {/* CTA Buttons */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.65, ease: [0.16, 1, 0.3, 1] }}
-          className="mt-10 flex flex-col sm:flex-row items-center gap-3"
+          transition={{ duration: 0.8, delay: 1.2, ease: [0.16, 1, 0.3, 1] }}
+          className="mt-12 flex flex-row items-center justify-center gap-4"
         >
           <Link
             href="/contact"
-            className="group inline-flex items-center gap-2.5 pl-5 pr-2 py-2 rounded-full bg-foreground text-background font-medium text-sm hover:bg-accent transition-all duration-300"
+            className="group relative flex items-center gap-3 pl-8 pr-3 py-3 rounded-full bg-foreground text-background font-bold text-xs uppercase tracking-widest hover:bg-accent hover:text-accent-foreground transition-all duration-500 shadow-2xl"
           >
             <span>{t.hero.ctaTalk}</span>
-            <span className="w-8 h-8 rounded-full bg-background/10 flex items-center justify-center group-hover:rotate-45 transition-transform duration-300">
-              <ArrowUpRight className="w-4 h-4" />
-            </span>
+            <div className="w-10 h-10 rounded-full bg-background/10 flex items-center justify-center group-hover:rotate-45 transition-transform duration-500">
+              <ArrowUpRight className="w-5 h-5" />
+            </div>
           </Link>
           <Link
             href="mailto:hello@seydinadiop.com"
-            className="group inline-flex items-center gap-2.5 px-5 py-3 rounded-full surface-elevated font-medium text-sm hover:border-white/20 transition-all duration-300"
+            className="px-8 py-5 rounded-full glass-strong border border-white/5 font-bold text-xs uppercase tracking-widest hover:bg-white/5 transition-all duration-500"
           >
-            <Mail className="w-4 h-4" />
-            <span>{t.hero.ctaEmail}</span>
+            {t.hero.ctaEmail}
           </Link>
-        </motion.div>
-
-
-        {/* Floating preview cards */}
-        <motion.div
-          initial={{ opacity: 0, y: 60 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1.2, delay: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          className="mt-16 sm:mt-20 lg:mt-24 w-full relative"
-        >
-          <div className="grid grid-cols-3 sm:grid-cols-5 gap-3 sm:gap-4 max-w-5xl mx-auto">
-            {[
-              { tilt: -8, y: 20, label: 'YONI', sub: 'logistics', hideOnMobile: false },
-              { tilt: -4, y: 10, label: 'NEOSYNC', sub: 'saas', hideOnMobile: true },
-              { tilt: 0, y: 0, label: 'SONATEL', sub: 'edu', highlight: true, hideOnMobile: false },
-              { tilt: 4, y: 10, label: 'DMT', sub: 'qhse', hideOnMobile: true },
-              { tilt: 8, y: 20, label: 'ÉCOLE', sub: '221', hideOnMobile: false },
-            ].map((card, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 40 }}
-                animate={{ 
-                  opacity: 1, 
-                  y: card.y, 
-                  rotate: card.tilt 
-                }}
-                transition={{ 
-                  duration: 1, 
-                  delay: 0.9 + i * 0.08, 
-                  ease: [0.16, 1, 0.3, 1] 
-                }}
-                whileHover={{ y: card.y - 8, rotate: 0, scale: 1.05 }}
-                className={`aspect-[3/4] rounded-2xl overflow-hidden ${
-                  card.highlight ? 'surface-elevated glow-accent' : 'surface-card'
-                } ${card.hideOnMobile ? 'hidden sm:flex' : 'flex'} p-3 sm:p-4 flex-col justify-between relative group cursor-pointer`}
-              >
-                <div className="absolute inset-0 bg-gradient-to-b from-accent/0 via-accent/0 to-accent/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                <div className="flex items-center justify-between relative z-10">
-                  <span className="text-[10px] sm:text-xs font-mono text-muted-foreground">0{i + 1}</span>
-                  <span className="w-1.5 h-1.5 rounded-full bg-accent/60" />
-                </div>
-                <div className="relative z-10">
-                  <p className="text-xs sm:text-sm font-semibold tracking-tight">{card.label}</p>
-                  <p className="text-[10px] sm:text-xs text-muted-foreground">{card.sub}</p>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-
-          {/* Bottom fade */}
-          <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-background via-background/80 to-transparent pointer-events-none" />
         </motion.div>
       </motion.div>
 
-      {/* Bottom scroll hint */}
+      {/* Floating Preview Gallery */}
+      <motion.div
+        initial={{ opacity: 0, y: 100 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1.5, delay: 1.4, ease: [0.16, 1, 0.3, 1] }}
+        className="mt-20 w-full max-w-6xl mx-auto px-4 relative flex justify-center"
+      >
+        <div className="grid grid-cols-3 sm:grid-cols-5 gap-4 w-full">
+          {[
+            { tilt: -12, y: 40, label: 'YONI', sub: 'logistics', img: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=800' },
+            { tilt: -6, y: 20, label: 'NEOSYNC', sub: 'saas', img: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=800' },
+            { tilt: 0, y: 0, label: 'SONATEL', sub: 'edu', img: 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&q=80&w=800', highlight: true },
+            { tilt: 6, y: 20, label: 'DMT', sub: 'qhse', img: 'https://images.unsplash.com/photo-1551288049-bbbda536339a?auto=format&fit=crop&q=80&w=800' },
+            { tilt: 12, y: 40, label: 'ÉCOLE', sub: '221', img: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&q=80&w=800' },
+          ].map((card, i) => (
+            <motion.div
+              key={i}
+              whileHover={{ y: card.y - 15, rotate: 0, scale: 1.1, zIndex: 50 }}
+              initial={{ rotate: card.tilt }}
+              style={{ y: card.y }}
+              className={`aspect-[3/4] rounded-2xl overflow-hidden border border-white/10 relative group cursor-pointer shadow-2xl transition-all duration-500 ${
+                card.highlight ? 'ring-2 ring-accent/50' : ''
+              }`}
+            >
+              <img 
+                src={card.img} 
+                alt={card.label} 
+                className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 grayscale group-hover:grayscale-0 opacity-50 group-hover:opacity-100" 
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent" />
+              <div className="absolute bottom-4 left-4 z-10">
+                <p className="text-xs font-bold tracking-widest uppercase">{card.label}</p>
+                <p className="text-[10px] text-muted-foreground uppercase tracking-wider">{card.sub}</p>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </motion.div>
+
+      {/* Scroll Hint */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 1.5, duration: 1 }}
-        className="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
+        transition={{ delay: 2.5, duration: 1 }}
+        className="absolute bottom-8 left-1/2 -translate-x-1/2"
       >
-        <span className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground">Scroll</span>
-        <div className="w-px h-8 bg-gradient-to-b from-muted-foreground to-transparent" />
+        <div className="w-[1px] h-12 bg-gradient-to-b from-accent to-transparent" />
       </motion.div>
     </section>
   )

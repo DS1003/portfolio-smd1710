@@ -9,6 +9,7 @@ import { PageTransition } from '@/components/page-transition'
 import { ScrollProgress } from '@/components/scroll-progress'
 import { LanguageProvider } from '@/providers/language-provider'
 import { ScrollToTop } from '@/components/scroll-to-top'
+import ClickSpark from '@/components/click-spark'
 
 export const metadata: Metadata = {
   title: 'Seydina Mouhammad Diop — UI/UX Designer & FullStack Developer',
@@ -21,7 +22,7 @@ export const metadata: Metadata = {
     locale: 'en_US',
     title: 'Seydina Mouhammad Diop — UI/UX Designer & FullStack Developer',
     description: 'Building modern digital experiences for startups, SaaS platforms and ambitious brands.',
-    siteName: 'Seydina Diop',
+    siteName: 'Seydina Mouhammad Diop',
   },
   twitter: {
     card: 'summary_large_image',
@@ -46,16 +47,25 @@ export default function RootLayout({
     <html lang="en" className={`${GeistSans.variable} ${GeistMono.variable} bg-background`}>
       <body className="font-sans antialiased overflow-x-hidden bg-background text-foreground">
         <LanguageProvider>
-          <SmoothScrollProvider>
-            <CustomCursor />
-            <ScrollProgress />
-            <Navbar />
-            <ScrollToTop />
-            <PageTransition>
-              {children}
-            </PageTransition>
-          </SmoothScrollProvider>
+          <ClickSpark
+            sparkColor='rgba(255,255,255,0.6)'
+            sparkSize={10}
+            sparkRadius={15}
+            sparkCount={8}
+            duration={400}
+          >
+            <SmoothScrollProvider>
+              <CustomCursor />
+              <ScrollProgress />
+              <Navbar />
+              <ScrollToTop />
+              <PageTransition>
+                {children}
+              </PageTransition>
+            </SmoothScrollProvider>
+          </ClickSpark>
         </LanguageProvider>
+
 
       </body>
     </html>

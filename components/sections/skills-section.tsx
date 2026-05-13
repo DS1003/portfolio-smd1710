@@ -1,22 +1,23 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { Code2, Palette, Wrench, Sparkles } from 'lucide-react'
+import { Code2, Palette, Wrench, Sparkles, Cpu } from 'lucide-react'
 import { useLanguage } from '@/providers/language-provider'
+import SplitText from '@/components/split-text'
 
 function Marquee({ items, direction = 'left' }: { items: string[]; direction?: 'left' | 'right' }) {
   const duplicated = [...items, ...items]
   return (
-    <div className="relative overflow-hidden py-2">
+    <div className="relative overflow-hidden py-4 mask-fade-x">
       <motion.div
-        className="flex gap-3 whitespace-nowrap"
+        className="flex gap-4 whitespace-nowrap"
         animate={{ x: direction === 'left' ? ['0%', '-50%'] : ['-50%', '0%'] }}
-        transition={{ duration: 40, ease: 'linear', repeat: Infinity }}
+        transition={{ duration: 30, ease: 'linear', repeat: Infinity }}
       >
         {duplicated.map((skill, i) => (
           <span
             key={`${skill}-${i}`}
-            className="flex-shrink-0 px-5 py-2.5 rounded-full surface-card text-sm font-medium hover:border-white/20 transition-colors"
+            className="flex-shrink-0 px-8 py-3 rounded-full glass-strong text-xs font-bold uppercase tracking-widest hover:bg-accent hover:text-accent-foreground transition-all duration-300 border border-white/5"
           >
             {skill}
           </span>
@@ -46,54 +47,55 @@ export function SkillsSection() {
       skills: ['Figma', 'Framer', 'Design Systems', 'Prototyping', 'UX Research', 'Motion Design', 'Accessibility'],
     },
     {
-      icon: Sparkles,
-      label: t.skills.categories.tools,
-      skills: ['Git', 'Docker', 'Vercel', 'GitHub Actions', 'Linear', 'Notion', 'Storybook'],
+      icon: Cpu,
+      label: 'DesignOps',
+      skills: ['Component Libraries', 'Handoff Workflows', 'Design Tokens', 'Design Linting', 'Dev-Design Bridge'],
     },
   ]
 
   const allSkills = skillGroups.flatMap((g) => g.skills)
 
   return (
-    <section id="skills" className="relative py-24 sm:py-32 lg:py-40 px-4 sm:px-6 lg:px-8">
+    <section id="skills" className="relative py-24 sm:py-32 lg:py-48 px-4 sm:px-6 lg:px-8">
+
+
       <div className="relative max-w-7xl mx-auto">
         {/* Header */}
-        <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-8 mb-12 lg:mb-16">
-          <div>
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-              className="inline-flex items-center gap-2 pl-2 pr-4 py-1.5 rounded-full glass mb-6"
-            >
-              <span className="px-2 py-0.5 rounded-full bg-accent text-accent-foreground text-xs font-semibold">
-                {t.skills.badge}
-              </span>
-              <span className="text-xs text-muted-foreground">{language === 'fr' ? 'Mes outils préférés' : 'Tools of the trade'}</span>
-            </motion.div>
+        <div className="flex flex-col items-center text-center mb-16 lg:mb-24">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="inline-flex items-center gap-3 px-4 py-2 rounded-full glass-strong border border-white/5 mb-8"
+          >
+            <Sparkles className="w-3 h-3 text-accent" />
+            <span className="text-[10px] font-bold uppercase tracking-[0.4em] text-muted-foreground">
+              {t.skills.badge}
+            </span>
+          </motion.div>
 
-            <motion.h2
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-              className="text-4xl sm:text-5xl lg:text-7xl font-medium tracking-[-0.03em] leading-[1.05] text-balance max-w-3xl"
-            >
-              <span className="text-gradient-mute">{language === 'fr' ? 'Technologies utilisées' : 'Technologies I work with'}</span>{' '}
-              <span className="text-foreground">{language === 'fr' ? '— de l\'idée à l\'envoi' : '— from idea to ship'}</span>
-            </motion.h2>
+          <div className="flex flex-col gap-4">
+            <SplitText
+              text={language === 'fr' ? 'Technologies Utilisées' : 'Technologies I Work With'}
+              className="text-4xl sm:text-6xl lg:text-7xl font-medium tracking-tighter text-gradient-mute leading-[0.9]"
+            />
+            <SplitText
+              text={language === 'fr' ? 'de l\'idée à l\'envoi' : 'from idea to ship'}
+              className="text-4xl sm:text-6xl lg:text-7xl font-medium tracking-tighter text-foreground leading-[0.9]"
+              delay={300}
+            />
           </div>
         </div>
 
         {/* Marquees */}
-        <div className="space-y-2 mb-16">
-          <Marquee items={allSkills.slice(0, 14)} direction="left" />
-          <Marquee items={allSkills.slice(14)} direction="right" />
+        <div className="space-y-4 mb-20">
+          <Marquee items={allSkills.slice(0, Math.ceil(allSkills.length / 2))} direction="left" />
+          <Marquee items={allSkills.slice(Math.ceil(allSkills.length / 2))} direction="right" />
         </div>
 
         {/* Category grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
           {skillGroups.map((group, i) => {
             const Icon = group.icon
             return (
@@ -102,31 +104,30 @@ export function SkillsSection() {
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: i * 0.08, ease: [0.16, 1, 0.3, 1] }}
-                className="surface-card rounded-3xl p-6 sm:p-7 card-hover hover:border-white/10 flex flex-col gap-5"
+                transition={{ duration: 0.8, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
+                className="glass-strong rounded-[2rem] p-8 card-hover flex flex-col gap-8 group"
               >
                 <div className="flex items-center justify-between">
-                  <div className="w-10 h-10 rounded-xl bg-accent/10 border border-accent/20 flex items-center justify-center">
-                    <Icon className="w-5 h-5 text-accent" />
+                  <div className="w-12 h-12 rounded-2xl bg-accent text-accent-foreground flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-500">
+                    <Icon className="w-6 h-6" />
                   </div>
-                  <span className="text-xs font-mono text-muted-foreground">0{i + 1}</span>
+                  <span className="text-xs font-mono text-muted-foreground opacity-40">0{i + 1}</span>
                 </div>
 
-                <div>
-                  <h3 className="text-lg font-medium tracking-tight">{group.label}</h3>
+                <div className="space-y-6">
+                  <h3 className="text-xl font-bold tracking-tight uppercase tracking-widest">{group.label}</h3>
+                  <ul className="flex flex-col gap-3">
+                    {group.skills.map((skill) => (
+                      <li
+                        key={skill}
+                        className="text-sm text-muted-foreground flex items-center gap-3 transition-colors hover:text-foreground group/item"
+                      >
+                        <span className="w-1.5 h-1.5 rounded-full bg-accent/20 group-hover/item:bg-accent transition-colors" />
+                        <span className="font-medium">{skill}</span>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
-
-                <ul className="flex flex-col gap-1.5 mt-auto">
-                  {group.skills.map((skill) => (
-                    <li
-                      key={skill}
-                      className="text-sm text-muted-foreground flex items-center gap-2"
-                    >
-                      <span className="w-1 h-1 rounded-full bg-accent/60" />
-                      <span>{skill}</span>
-                    </li>
-                  ))}
-                </ul>
               </motion.div>
             )
           })}
