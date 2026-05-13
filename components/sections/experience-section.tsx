@@ -28,7 +28,7 @@ function ExperienceCard({ experience, index }: { experience: Experience; index: 
       transition={{ duration: 0.8, delay: index * 0.1, ease: [0.16, 1, 0.3, 1] }}
       className="group relative"
     >
-      <div className="glass-strong rounded-[2rem] p-8 lg:p-12 transition-all duration-500 hover:shadow-2xl border border-white/5 hover:border-white/10 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center group/card">
+      <div className="glass-strong rounded-[2rem] p-6 sm:p-8 transition-all duration-500 hover:shadow-2xl border border-white/5 hover:border-white/10 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center group/card">
         {/* Left: Metadata */}
         <div className="lg:col-span-3 flex flex-col gap-4">
           <div className="inline-flex items-center gap-3">

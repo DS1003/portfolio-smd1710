@@ -22,14 +22,14 @@ export function HeroSection() {
   const scale = useTransform(scrollYProgress, [0, 1], [1, 0.98])
 
   return (
-    <section ref={ref} className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden pt-32 pb-20 px-4 sm:px-6 lg:px-8">
+    <section ref={ref} className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden pt-20 pb-10 px-4 sm:px-6 lg:px-8">
       <div className="absolute inset-0 grid-pattern grid-pattern-fade opacity-20 pointer-events-none" />
 
 
 
       <motion.div 
         style={{ y, opacity, scale }} 
-        className="relative max-w-5xl mx-auto w-full flex flex-col items-center text-center z-10"
+        className="relative max-w-5xl mx-auto w-full flex flex-col items-center text-center z-10 px-4"
       >
         {/* Top Pill Badge with Shiny Effect */}
         <motion.div
@@ -108,7 +108,7 @@ export function HeroSection() {
         transition={{ duration: 1.5, delay: 1.4, ease: [0.16, 1, 0.3, 1] }}
         className="mt-20 w-full max-w-6xl mx-auto px-4 relative flex justify-center"
       >
-        <div className="grid grid-cols-3 sm:grid-cols-5 gap-4 w-full">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2 sm:gap-4 w-full">
           {[
             { tilt: -12, y: 40, label: 'YONI', sub: 'logistics', img: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=800' },
             { tilt: -6, y: 20, label: 'NEOSYNC', sub: 'saas', img: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=800' },

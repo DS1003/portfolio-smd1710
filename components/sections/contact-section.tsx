@@ -41,11 +41,11 @@ export function ContactSection() {
         <div className="flex flex-col gap-4 mb-10">
           <SplitText
             text={t.contact.title}
-            className="text-5xl sm:text-7xl lg:text-9xl font-medium tracking-tighter text-foreground leading-[0.85]"
+            className="text-4xl sm:text-7xl lg:text-9xl font-medium tracking-tighter text-foreground leading-[0.85]"
           />
           <SplitText
             text={t.contact.titleGradient}
-            className="text-5xl sm:text-7xl lg:text-9xl font-medium tracking-tighter text-gradient-mute leading-[0.85]"
+            className="text-4xl sm:text-7xl lg:text-9xl font-medium tracking-tighter text-gradient-mute leading-[0.85]"
             delay={400}
           />
         </div>

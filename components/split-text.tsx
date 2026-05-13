@@ -46,19 +46,19 @@ export default function SplitText({
   }
 
   return (
-    <Tag className={`inline-block ${className}`}>
+    <Tag className={`block w-full ${className}`}>
       <motion.span
         variants={container}
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true }}
-        className="inline-flex flex-wrap justify-center"
+        className="flex flex-wrap justify-center gap-x-[0.25em] gap-y-[0.1em]"
       >
         {words.map((word, index) => (
           <motion.span
             key={index}
             variants={child}
-            className="inline-block mr-[0.25em] last:mr-0"
+            className="inline-block"
           >
             {word}
           </motion.span>
